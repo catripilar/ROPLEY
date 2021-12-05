@@ -1,0 +1,17 @@
+{
+  "expo": {
+    "name": "Robley",
+    "slug": "Robley",
+    "version": "1.0.0",
+    "icon": "./assets/ROPLEY.png",
+    "splash":{
+      "image": "./assets/ROPLEY.png",
+      "resizeMode":"contain",
+      "backgroundColor": "#fff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "TSApp"
+}
