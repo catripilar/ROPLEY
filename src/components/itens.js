@@ -1,34 +1,31 @@
 import React from 'react';
-import styled from 'styled-components';
+import { StyleSheet, Text, View,Image} from 'react-native';
 import {AntDesign} from '@expo/vector-icons';
 const Itens = ({foto,nome,key,nota,tipo,distancia,frete,tempo})=> {
   return (
-      <Rview key={key}>
-          <Rfoto source={{uri:foto.trim(),width:40,height:40,resizeMode:'cover'}}/>
-          <Rinfo>
+      <View style={styles.Rview} key={key}>
+          <Image style={{borderRadius:20}} source={{uri:foto.trim(),width:40,height:40,resizeMode:'cover'}}/>
+          <View style={styles.Rinfo}>
               <Text style={{fontSize:16}}>{nome}</Text>
               <Text><AntDesign name='star' size={12} color='#F9A825'/> {nota} - {tipo} - {distancia}</Text>
               <Text>{tempo} * R$ {frete}</Text>
-          </Rinfo>
-      </Rview>
+          </View>
+      </View>
   );
 }
-const Text = styled.Text``
-const Rfoto = styled.Image`border-radius:20px;`
-const Rview = styled.View`
-    flex-direction: row;
-    align-items: center;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    background: #fff;
-    min-width: 90%;
-    margin-bottom: 10px;
-    padding: 15px;
-`
-const Rinfo = styled.View`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-left: 20px;
-`
+const styles = StyleSheet.create({
+    Rview:{
+        flexDirection:'row',
+        alignItems:'center',
+        borderColor:'#ccc',
+        borderStyle:'solid',
+        borderWidth:1,
+        borderRadius:10,
+        backgroundColor:'#fff',
+        minWidth:'90%',
+        marginBottom:10,
+        padding:15
+    },
+    Rinfo:{display:'flex',flexDirection:'column',justifyContent:'center',marginLeft:20}
+})
 export default Itens

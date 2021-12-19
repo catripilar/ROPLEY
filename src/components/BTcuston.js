@@ -1,26 +1,24 @@
 import React from 'react';
-import styled,{css} from 'styled-components';
-const BTcuston = ({theme,title,onPress})=> {
+import { StyleSheet, Text, View,TouchableOpacity} from 'react-native';
+const BTcuston = ({BotaoC,Btexto,title,onPress})=> {
   return (
-      <Bpos>
-        <Botao theme={theme|| ''} onPress={()=>onPress?.()}>
-          <Btexto theme={theme|| ''}>{title}</Btexto>
-        </Botao>
-      </Bpos>
+      <View style={{padding:15}}>
+        <TouchableOpacity style={[styles.Botao,BotaoC]} onPress={()=>onPress?.()}>
+          <Text style={[{color:'#4169E1',textTransform:'uppercase'},Btexto]}>{title}</Text>
+        </TouchableOpacity>
+      </View>
   );
 }
-const Bpos = styled.View`padding:15px;`
-const Btexto = styled.Text`
-  color: #4169E1;text-transform:uppercase;
-  ${({theme})=> theme == 'primario' && css`color: #fff;`}
-`
-const Botao = styled.TouchableOpacity`
-  border: 1px solid #4169E1;
-  border-radius: 20px;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  ${({theme})=> theme == 'primario' && css`background: #4169E1;`}
-`
+const styles = StyleSheet.create({
+  Botao:{
+    borderColor:'#4169E1',
+    borderStyle:'solid',
+    borderWidth:1,
+    borderRadius:20,
+    padding:20,
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center'
+  }
+})
 export default BTcuston

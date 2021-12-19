@@ -1,10 +1,11 @@
 import React,{useState,useEffect} from 'react';
 import styled,{css} from 'styled-components';
-import {ActivityIndicator,Dimensions} from 'react-native';
+import {Platform,StyleSheet, Text, View,Image,ActivityIndicator,Dimensions,ScrollView,TouchableOpacity} from 'react-native';
 import Itens from '../components/itens';
 import Categoria from '../components/categoria';
 import Banner from '../components/banner';
 import * as ScreenOrientation from 'expo-screen-orientation';
+import dados from './dados.json'
 ScreenOrientation.unlockAsync()
 export default function Home() {
   const [banners,setBanner] = useState([]);
@@ -18,7 +19,7 @@ export default function Home() {
     }
     async function buscaD(){
       try{
-        const resposta = await fetch('http://my-json-server.typicode.com/pablohdev/app-ifood-clone/db');
+        const resposta = await fetch('https://catripilar.github.io/dadosAppR/dados.json');
         const data = await resposta.json();
         setLoaded(true);
         setBanner(data.banner_principal);
@@ -29,25 +30,25 @@ export default function Home() {
     buscaD()
     changeScreenOrientation()
   },[])
-  const ViewHome =(props) =>{
+  const ViewHome =()=>{
     return(
-      <Viewprin showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
-        <Selectipo>
-          <BTipoTs onPress={()=>setTipo('Entrega')}>
-            <TexTipos selected={tipo == 'Entrega'}>Entrega</TexTipos>
-          </BTipoTs>
-          <BTipoTs onPress={()=>setTipo('Retirar')}>
-            <TexTipos selected={tipo == 'Retirar'}>Retirar</TexTipos>
-          </BTipoTs>
-        </Selectipo>
-        <CategoriaView horizontal={true} showsHorizontalScrollIndicator={false}>
+      <View style={{paddingTop:40}}>
+        <View style={styles.Selectipo}>
+          <TouchableOpacity style={{marginRight:20}} onPress={()=>setTipo('Entrega')}>
+            <Text style={styles.TexTipos} selected={tipo == 'Entrega'}>Entrega</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={{marginRight:20}} onPress={()=>setTipo('Retirar')}>
+            <Text style={styles.TexTipos} selected={tipo == 'Retirar'}>Retirar</Text>
+          </TouchableOpacity>
+        </View>
+        <ScrollView style={{marginTop:20}} horizontal={true} showsHorizontalScrollIndicator={false}>
           {categorias.map(categoria =>(<Categoria key={categoria.id} foto={categoria.img_url} texto={categoria.nome}/>))}
-        </CategoriaView>
-        <Bannerview horizontal={true} showsHorizontalScrollIndicator={false}>
+        </ScrollView>
+        <ScrollView style={styles.Bannerview} horizontal={true} showsHorizontalScrollIndicator={false}>
           {banners.map(banner =>(<Banner key={banner.id} foto={banner.banner_img_url}/>))}
-        </Bannerview>
-          <TituloRes>Restaurantes</TituloRes>
-          <ViewRes>
+        </ScrollView>
+          <Text style={styles.TituloRes}>Restaurantes</Text>
+          <View style={styles.ViewRes}>
             {restaurantes.map(
               restaurante =>(<><Itens
               key = {restaurante.id}
@@ -59,55 +60,39 @@ export default function Home() {
               tempo = {restaurante.tempo_entrega}
               foto = {restaurante.url_img}
               /></>))}
-          </ViewRes>
-      </Viewprin>
+          </View>
+      </View>
       )
   }
   return (
-    <Savev>
+    <ScrollView >
     {loaded?(<ViewHome/>):
-    (<ViewC><ActivityIndicator color='#4169E1' size='large'/></ViewC>)
+    (<View style={{paddingTop:40}}><ActivityIndicator color='#4169E1' size='large'/></View>)
     }
-    </Savev>
+    </ScrollView>
   );
 }
-const ViewC = styled.View`flex:2;align-items:center;padding-top:40px;`
-const Savev = styled.View`flex: 1;`
-const Viewprin = styled.ScrollView`padding:40px 0;flex:1;`
-const Selectipo = styled.View`
-  flex-direction: row;
-  text-align: left;
-  margin: 0 20px 10px 20px;
-  font-weight: bold;
-  width: ${(Dimensions.get('window').width)}px;
-`
-const BtContan = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 0 20px 20px 20px;
-`
-const CategoriaView = styled.ScrollView`margin-top: 20px;`
-const BTipoTs = styled.TouchableOpacity`margin-right:20px;`
-const TexTipos = styled.Text`
-  font-size: 17px;
-  ${props => props.selected?css`font-weight:bold;color:#4169E1;`:css``}
-`
-const Bannerview = styled.ScrollView`
-  margin-top: 20px;
-  flex-direction: row;
-  width: ${(Dimensions.get('window').width -10)}px;
-`
-const ViewRes = styled.View`
-  padding-bottom: 30px;
-  margin: 20px;
-  width: ${(Dimensions.get('window').width -40)}px;
-`
-const TituloRes = styled.Text`
-  text-align: left;
-  font-size: 18px;
-  margin: 20px;
-  font-weight: bold;
-  width: ${(Dimensions.get('window').width)}px;
-`
+const styles = StyleSheet.create({
+  Selectipo:{
+    flexDirection:'row',
+    textAlign:'left',
+    fontWeight:'bold',
+    marginLeft:20,
+    marginRight:20,
+    width:(Dimensions.get('window').width)
+  },
+  BtContan:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'center',
+    width:'100%',
+    paddingLeft:20,
+    paddingRight:20,
+    paddingBottom:20
+  },
+  BTipoTs:{marginRight:20},
+  Bannerview:{marginTop:20,flexDirection:'row',width:(Dimensions.get('window').width -10)},
+  ViewRes:{paddingBottom:30,margin:20,width:(Dimensions.get('window').width -40)},
+  TituloRes:{textAlign:'left',fontSize:18,margin:20,fontWeight:'bold',width:(Dimensions.get('window').width)},
+  TexTipos:{fontSize:17,color:'#4169E1',fontWeight:'bold'}
+})

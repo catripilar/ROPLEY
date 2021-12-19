@@ -1,19 +1,17 @@
 import React from 'react';
-import styled from 'styled-components';
+import {Image,View} from 'react-native';
 import {Dimensions} from 'react-native';
 const Banner = ({foto,key})=> {
   return (
-      <Bview key={key}>
-          <Bfoto source={{
+      <View style={{marginLeft:20,marginRight:10,alignItems:'center'}} key={key}>
+          <Image style={{borderRadius:10}} source={{
               uri:foto.trim(),
               width:((Dimensions.get('window').width)-50),
               height:180,
               resizeMode:'contain'
             }}
           />
-      </Bview>
+      </View>
   );
 }
-const Bview = styled.View`margin-left:20px;margin-right:10px;align-items:center;`
-const Bfoto = styled.Image`border-radius:10px;`
 export default Banner
